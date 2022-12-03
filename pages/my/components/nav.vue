@@ -1,0 +1,53 @@
+<template>
+	<view class="nav">
+		<view class="navItem" v-for="(item,index) in navList" :key="index">
+			<text :class="item.icon" class="icon"></text>
+			<text class="title mt-1">{{item.title}}</text>
+		</view>
+	</view>
+</template>
+
+<script>
+	import myNavList from "@/config/my-nav.js"
+	export default {
+		name: "navBar",
+		props: {
+			navList: {
+				type: Array,
+				default: () => myNavList()
+			}
+		}
+
+	}
+</script>
+
+<style lang="scss">
+	.nav {
+		width: 695rpx;
+		height: 150rpx;
+		background-color: #fff;
+		border-radius: 10rpx;
+		margin: 50rpx auto 0;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		box-shadow: 2px 2px 5px #ddd;
+
+		.navItem {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+
+			.icon {
+				color: rgb(254, 189, 0);
+				font-size: 40rpx !important;
+			}
+
+			.title {
+				font-size: 12rpx;
+				color: #6c757d;
+			}
+		}
+	}
+</style>

@@ -3,6 +3,10 @@
 		<image class="logo" src="/static/logo.png"></image>
 		<view class="text-area">
 			<text class="title">{{title}}</text>
+			<view class="iconfont icon-tijiao"></view>
+			<view class="bg-main-hover font-lg animated bounce text-center animate__animated animate__flipInX">
+				12346
+			</view>
 		</view>
 	</view>
 </template>
