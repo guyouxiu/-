@@ -92,4 +92,13 @@
 		}
 	
 	}
+	button {
+		background-color: #5ccc84;
+		color: #fff;
+		height: 100rpx;
+		font-size: 32rpx;
+		line-height: 100rpx;
+		margin-bottom: 70rpx;
+		margin-top: 40rpx;
+	}
 </style>
