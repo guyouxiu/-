@@ -3,7 +3,7 @@ class Http{
 	static appid ='bd9d01ecc75dbbaaefce'
 	static baseUrl = 'http://demonuxtapi.dishait.cn'
 	static request(options={}){
-		console.log(options);
+		// console.log(options);
 		return new Promise((resolve,reject)=>{
 			uni.request({
 			    url: Http.baseUrl + options.url, 
@@ -14,7 +14,7 @@ class Http{
 			        ...options.header
 			    },
 			    success: (res) => {
-			        console.log(res);
+			        // console.log(res);
 			        resolve(res)
 			    },
 				fail:(err)=>{

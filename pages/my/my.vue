@@ -1,7 +1,7 @@
 <template>
 	<view class="my-page">
 		<view class="userInfo">
-			<mytop ></mytop>
+			<mytop :getToken="getToken"></mytop>
 			<navpage></navpage>
 		</view>
 		<lists></lists>
@@ -15,7 +15,7 @@
 	export default {
 		data() {
 			return {
-
+				getToken: false,
 			};
 		},
 		components: {
@@ -23,7 +23,9 @@
 			navpage,
 			lists
 		},
-		
+		onShow() {
+			this.getToken = !!uni.getStorageSync('token')
+		}
 	}
 </script>
 
@@ -37,7 +39,7 @@
 	.userInfo {
 		height: 300rpx;
 		background-color: #5ccc84;
-		padding: 30rpx;
+		padding: 10rpx 30rpx 10rpx 30rpx;
 		border-radius: 0 0 100rpx 100rpx;
 	}
 </style>

@@ -6,16 +6,16 @@
 		</view>
 		<view class="login">
 			<view class="texts">
-				<h4>{{!flag?'登录':"注册"}}</h4>
+				<h4>{{!flag?"登录":"注册"}}</h4>
 			</view>
 			<myinput v-model="form" :formList="formList"></myinput>
 			<button @click="goLogin">{{!flag?"登录":"注册"}}</button>
 			<view class="forget">
-				<text class="new" @click="changeFlag"  >{{flag?'去登录':'注册账号'}}</text>
+				<text class="new" @click="changeFlag" >{{flag?'去登录':'注册账号'}}</text>
 				<text class="password" @click="forgetpass" >忘记密码？</text>
 			</view>
 			<view class="footer">
-				<text class="iconfont icon-my"></text>
+				<text class="iconfont icon-weixindenglu icon"></text>
 			</view>
 			<view class="footTitles" v-if="!flag">
 				<checkbox-group @change="checkFlagChange">
@@ -43,21 +43,21 @@
 				formList: [{
 						type: 'text',
 						prop: "username",
-						icon: "iconfont icon-my",
+						icon: "iconfont icon-icon-test",
 						placeholder: "请输入用户名",
 						show: true,
 					},
 					{
 						type: 'password',
 						prop: "password",
-						icon: "iconfont icon-test",
+						icon: "iconfont icon-mima",
 						placeholder: "请输入密码",
 						show: true,
 					},
 					{
 						type: 'password',
 						prop: "repassword",
-						icon: "iconfont icon-test",
+						icon: "iconfont icon-mima",
 						placeholder: "请输入密码",
 						show: false,
 					}
@@ -72,6 +72,13 @@
 			back() {
 				uni.navigateBack()
 			},
+			checkFlagChange(e) {
+				if (e.detail.value.length) {
+					this.checkFlag = true
+				} else {
+					this.checkFlag = false
+				}
+			},
 			changeFlag(){
 				this.form={
 					username: "",
@@ -81,21 +88,21 @@
 				this.formList=[{
 						type: 'text',
 						prop: "username",
-						icon: "iconfont icon-my",
+						icon: "iconfont icon-icon-test",
 						placeholder: "请输入用户名",
 						show: true,
 					},
 					{
 						type: 'password',
 						prop: "password",
-						icon: "iconfont icon-test",
+						icon: "iconfont icon-mima",
 						placeholder: "请输入密码",
 						show: true,
 					},
 					{
 						type: 'password',
 						prop: "repassword",
-						icon: "iconfont icon-test",
+						icon: "iconfont icon-mima",
 						placeholder: "请输入密码",
 						show: false,
 					}
@@ -103,63 +110,71 @@
 				this.flag=!this.flag
 				this.formList[2].show=this.flag
 			},
-			async goLogin(){
-				try{
-					if(this.flag){
-						
-						const respones=await loginApi.getRegister(this.form)
-						if (respones.statusCode !== 20000) {
-							this.$utils.msg(respones.data.data)
-						}
-						if (respones.data.code === 20000) {
-							this.$utils.msg('注册成功')
-							this.form = {
-								username: "",
-								password: "",
-								repassword: "",
-							}
-							this.changeFlag()
-						}
-						
-						uni.hideLoading()
+			goLogin() {
+				if (!this.flag) {
+					if (!this.checkFlag) {
+						this.$utils.msg('请先阅读并同意用户协议&隐私声明')
+						return
 					}
-				}catch(e){
+					uni.showLoading({
+						title: ''
+					});
+					this.handelLoginOk()
+				} else {
+					uni.showLoading({
+						title: ''
+					});
+					this.handelLogin()
+			
+				}
+			},
+			//登录账号api
+			async handelLoginOk() {
+				try {
+					const res = await loginApi.getLogin(this.form)
+					uni.hideLoading()
+					if (res.statusCode !== 200) {
+						this.$utils.msg(res.data.data)
+					} else {
+						this.$utils.msg('登陆成功')
+						this.$store.commit('loginUserinfo', res.data.data)
+						uni.navigateTo({
+							url: '/pages/bind-phone/bind-phone'
+						});
+						this.$store.commit('init')
+					}
+			
+				} catch (e) {
+					console.log(e);
 					//TODO handle the exception
-					console.log(e)
+				}
+			},
+			//注册账号api
+			async handelLogin() {
+				try {
+					const res = await loginApi.getRegister(this.form)
+					if (res.statusCode !== 20000) {
+						this.$utils.msg(res.data.data)
+					}
+					if (res.data.code === 20000) {
+						this.$utils.msg('注册成功')
+						this.form = {
+							username: "",
+							password: "",
+							repassword: "",
+						}
+						this.changeFlag()
+					}
+			
+					uni.hideLoading()
+				} catch (e) {
+					//TODO handle the exception
 				}
 			},
 			forgetpass(){
-				this.formList=[{
-						type: 'text',
-						prop: "phone",
-						icon: "iconfont icon-my",
-						placeholder: "请输入手机号",
-						shows: true,
-					},
-					{
-						type: 'number',
-						prop: "code",
-						icon: "iconfont icon-test",
-						placeholder: "验证码",
-						shows: true,
-						showss:true,
-					},
-					{
-						type: 'password',
-						prop: "password",
-						icon: "iconfont icon-test",
-						placeholder: "请输入密码",
-						shows: true,
-					},
-					
-					{
-						type: 'password',
-						prop: "repassword",
-						icon: "iconfont icon-test",
-						placeholder: "请输入确认密码",
-						shows: true,
-					}
-				]
+				uni.navigateTo({
+					url:"/pages/login/forget"
+				})
 			}
 		}
 	}
@@ -246,13 +261,14 @@
 		margin-top: 65rpx;
 	
 		.icon {
-			font-size: 90rpx;
+			font-size: 100rpx;
 			color: #5ccc84;
 		}
 	
 	}
 	
 	.footTitles {
+		margin-top: 40rpx;
 		display: flex;
 		justify-content: center;
 		align-items: center;

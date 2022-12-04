@@ -12,7 +12,7 @@ export default{
 	// 登陆
 	getLogin(data){
 		return http.request({
-			url:'/login',
+			url:'/mobile/login',
 			data,
 			method:"post",
 			header:{
@@ -23,7 +23,7 @@ export default{
 	//获取验证码
 	getCode(data){
 		return http.request({
-			url:'/get_captcha',
+			url:'/mobile/get_captcha',
 			data,
 			method:"post",
 		})

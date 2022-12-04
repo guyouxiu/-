@@ -3,6 +3,8 @@ import App from './App'
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false
+import mixin from "@/common/mixins.js"
+Vue.mixin(mixin)
 import * as util from "@/common/utils.js"
 Vue.prototype.$utils = util
 App.mpType = 'app'
