@@ -1,16 +1,7 @@
 <template>
 	<view>
-		<view class="df" v-if="item.show" v-for="(item,index) in formList" :key="index">
-			<text :class="item.icon"></text>
-			<input :type="item.type" :placeholder="item.placeholder" v-model.sync="value[item.prop]">
-			
-		</view>
-		<view class="df" v-if="item.shows" v-for="(item,index) in formList" :key="index">
-			<text :class="item.icon"></text>
-			<input :type="item.type" :placeholder="item.placeholder" v-model.sync="value[item.prop]">
-			<button class="send" v-if="item.showss">发送</button>
-		</view>
-		<view class="inputItem" v-if="!item.show" v-for="(item,index) in formLists" :key="index">
+		
+		<view class="inputItem" v-if="!item.show" v-for="(item,index) in formList" :key="index">
 			<text class="icon" :class="item.icon"></text>
 			<view class="inp_btn">
 				<input class="inout" :type="item.type" :placeholder="item.placeholder" v-model.sync="value[item.prop]">
@@ -33,10 +24,10 @@
 				type: Array,
 				default: () => []
 			},
-			formLists: {
-				type: Array,
-				default: () => []
-			},
+			// formLists: {
+			// 	type: Array,
+			// 	default: () => []
+			// },
 			value: {
 				type: Object,
 				default: () => {}
@@ -82,7 +73,7 @@
 	}
 	.inputItem{
 		width: 615rpx;
-		height: 95rpx;
+		height: 100rpx;
 		margin-top: 50rpx;
 		background-color: #f5f5f5;
 		display: flex;

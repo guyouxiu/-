@@ -9,7 +9,7 @@
 			</view>
 
 			<!-- //表单组件 -->
-			<myInput v-model.sync="form" :formLists="formLists" :btnTexts="btnText" @getCode="getCode"></myInput>
+			<myInput v-model.sync="form" :formList="formList" :btnTexts="btnText" @getCode="getCode"></myInput>
 
 			
 				<button @click="binding">绑定</button>
@@ -31,7 +31,7 @@
 					phone: '',
 					code: '',
 				},
-				formLists: [{
+				formList: [{
 						type: 'text',
 						prop: "phone",
 						icon: "iconfont icon-icon-test",
@@ -44,7 +44,7 @@
 						placeholder: "验证码",
 						show: false,
 						prop: "code",
-
+				
 					}
 				],
 			};

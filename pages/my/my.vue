@@ -2,9 +2,9 @@
 	<view class="my-page">
 		<view class="userInfo">
 			<mytop :getToken="getToken"></mytop>
-			<navpage></navpage>
+			<navpage ></navpage>
 		</view>
-		<lists></lists>
+		<lists :myList="List"></lists>
 	</view>
 </template>
 
@@ -12,16 +12,24 @@
 	import mytop from '@/pages/my/components/my-top.vue'
 	import navpage from '@/pages/my/components/nav.vue'
 	import lists from '@/pages/my/components/list.vue'
+	import myList from "@/config/my-list.js"
+	
 	export default {
 		data() {
 			return {
 				getToken: false,
+				List:myList()
 			};
 		},
 		components: {
 			mytop,
 			navpage,
 			lists
+		},
+		onNavigationBarButtonTap(e){
+			if(e.index==0){
+				this.navTo('/pages/setting/setting')
+			}
 		},
 		onShow() {
 			this.getToken = !!uni.getStorageSync('token')

@@ -7,8 +7,8 @@
 			<view class="texts">
 				<text>找回密码</text>
 			</view>
-			<myinput v-model="form" :formList="formList"></myinput>
-		<button>立即找回</button>
+			<myinput v-model="form" :formList="formList" :btnTexts="btnText" @getCode="getCode"></myinput>
+		<button @click="findpass">立即找回</button>
 		</view>
 	</view>
 </template>
@@ -28,42 +28,84 @@
 					repassword: '',
 					code:''
 				},
-				formList:[{
+				formList: [{
 						type: 'text',
 						prop: "phone",
 						icon: "iconfont icon-icon-test",
 						placeholder: "请输入手机号",
-						shows: true,
+						show: false,
 					},
 					{
-						type: 'number',
-						prop: "code",
+						type: 'text',
 						icon: "iconfont icon-mima",
 						placeholder: "验证码",
-						shows: true,
-						showss:true,
+						show: false,
+						prop: "code",
+				
 					},
 					{
 						type: 'password',
-						prop: "password",
 						icon: "iconfont icon-mima",
 						placeholder: "请输入密码",
-						shows: true,
+						show: false,
+						prop: "password",
 					},
-					
 					{
 						type: 'password',
-						prop: "repassword",
 						icon: "iconfont icon-mima",
 						placeholder: "请输入确认密码",
-						shows: true,
+						show: false,
+						prop: "repassword",
 					}
-				]
+				],
 			};
 		},
 		methods:{
 			back() {
 				uni.navigateBack()
+			},
+		
+			//获取验证码api
+			async handelCode() {
+				try {
+					const res = await loginApi.getCode({phone:this.form.phone})
+					if(res.statusCode!==200){
+						this.$utils.msg(res.data.data)
+					}else{
+						this.setTiem()
+						
+						this.$utils.msg('已发送验证码')
+					}
+				} catch (e) {
+				}
+			},
+			//获取验证码按钮
+			getCode(){
+				if(this.timeFlag) return
+				this.handelCode()
+			},
+			//找回密码api
+			async handelFindpass(){
+				try{
+					const res = await loginApi.findPassWord(this.form)
+					console.log(res);
+					if(res.statusCode!==200){
+						this.$utils.msg(res.data.data)
+					}else{
+						this.$utils.msg('找回成功')
+						this.navBack()
+						uni.hideLoading()
+					}
+				}catch(e){
+					//TODO handle the exception
+				}
+			},
+			//找回密码
+			findpass(){
+				uni.showLoading({
+					title:"提交中"
+				})
+				this.handelFindpass()
 			},
 		}
 	}

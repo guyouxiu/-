@@ -31,9 +31,25 @@ export default{
 	//绑定手机号
 	getBindingPhone(data){
 		return http.request({
-			url:'/bind_mobile',
+			url:'/mobile/bind_mobile',
 			data,
 			method:"post",
+		})
+	},
+	//找回密码
+	findPassWord(data){
+		return http.request({
+			url:'/mobile/forget',
+			data,
+			method:"post",
+		})
+	},
+	// 修改密码
+	changePass(data){
+		return http.request({
+			url:'/mobile/update_password',
+			data,
+			method:'post'
 		})
 	}
 }

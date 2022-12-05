@@ -6,18 +6,18 @@
 		</view>
 		<view class="login">
 			<view class="texts">
-				<h4>{{!flag?"登录":"注册"}}</h4>
+				<h4>{{flag?"登录":"注册"}}</h4>
 			</view>
-			<myinput v-model="form" :formList="formList"></myinput>
-			<button @click="goLogin">{{!flag?"登录":"注册"}}</button>
+			<myinput v-model="form" :formList="formList" ></myinput>
+			<button @click="goLogin" >{{flag?"登录":"注册"}}</button>
 			<view class="forget">
-				<text class="new" @click="changeFlag" >{{flag?'去登录':'注册账号'}}</text>
+				<text class="new" @click="changeFlag" >{{!flag?'去登录':'注册账号'}}</text>
 				<text class="password" @click="forgetpass" >忘记密码？</text>
 			</view>
 			<view class="footer">
 				<text class="iconfont icon-weixindenglu icon"></text>
 			</view>
-			<view class="footTitles" v-if="!flag">
+			<view class="footTitles" v-if="flag">
 				<checkbox-group @change="checkFlagChange">
 					<checkbox class="checkbox" value="xz" :checked="checkFlag" />
 				</checkbox-group>
@@ -39,27 +39,27 @@
 					repassword: ''
 				},
 				checkFlag: false,
-				flag: false,
+				flag: true,
 				formList: [{
 						type: 'text',
 						prop: "username",
 						icon: "iconfont icon-icon-test",
 						placeholder: "请输入用户名",
-						show: true,
+						show: false,
 					},
 					{
 						type: 'password',
 						prop: "password",
 						icon: "iconfont icon-mima",
 						placeholder: "请输入密码",
-						show: true,
+						show: false,
 					},
 					{
 						type: 'password',
 						prop: "repassword",
 						icon: "iconfont icon-mima",
 						placeholder: "请输入密码",
-						show: false,
+						show: true,
 					}
 				]
 
@@ -85,33 +85,11 @@
 					password: "",
 					repassword: "",
 				}
-				this.formList=[{
-						type: 'text',
-						prop: "username",
-						icon: "iconfont icon-icon-test",
-						placeholder: "请输入用户名",
-						show: true,
-					},
-					{
-						type: 'password',
-						prop: "password",
-						icon: "iconfont icon-mima",
-						placeholder: "请输入密码",
-						show: true,
-					},
-					{
-						type: 'password',
-						prop: "repassword",
-						icon: "iconfont icon-mima",
-						placeholder: "请输入密码",
-						show: false,
-					}
-				]
-				this.flag=!this.flag
-				this.formList[2].show=this.flag
+				this.flag = !this.flag
+				this.formList[2].show = this.flag
 			},
 			goLogin() {
-				if (!this.flag) {
+				if (this.flag) {
 					if (!this.checkFlag) {
 						this.$utils.msg('请先阅读并同意用户协议&隐私声明')
 						return
@@ -253,6 +231,7 @@
 		font-size: 32rpx;
 		line-height: 100rpx;
 		margin-bottom: 70rpx;
+		margin-top: 40rpx;
 	}
 	.footer {
 		width: 100%;

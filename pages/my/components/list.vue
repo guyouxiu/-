@@ -1,13 +1,15 @@
 <template>
 	<view class="list">
-		<view class="ListItem" v-for="(item,index) in List" :key="index">
-			<view class="ele" v-for="(ele,i) in item" :key="i">
+		<view class="ListItem" v-for="(item,index) in myList" :key="index">
+			<view class="ele" v-for="(ele,i) in item" :key="i" @click="change(ele)">
 				<view class="left">
 					<text class="icon" :class="ele.icon"></text>
 					<text class="text">{{ele.title}}</text>
 				</view>
 				<view class="right">
-					<text class="iconfont icon-jinru  "></text>
+					<text v-if="!ele.titles" class="iconfont icon-jinru  "></text>
+					<text class="texts" v-if="ele.titles">{{ele.titles}}</text>
+					
 				</view>
 			</view>
 		</view>
@@ -15,12 +17,29 @@
 </template>
 
 <script>
-	import myList from "@/config/my-list.js"
+	
 	export default {
 		props: {
-			List: {
-				type: Array,
-				default: () => myList()
+			
+			myList:{
+				type:Array,
+				default:()=>[]
+			}
+			
+		},
+		methods:{
+			change(ele){
+				if(ele.event){
+					this.$emit(ele.event)
+					return
+				}
+				if(ele.login || this.$store.getters.getTokens){
+					this.navTo(ele.page)
+					return
+				}else{
+					this.navTo('/pages/my/login')
+					return
+				}
 			}
 		}
 
@@ -62,5 +81,8 @@
 			}
 		}
 		
+	}
+	.texts{
+		color: #3b4144;
 	}
 </style>
