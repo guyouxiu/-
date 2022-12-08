@@ -46,6 +46,11 @@
 						url:"/pages/login/login"
 					})
 				}
+				if(this.getToken){
+					this.navTo('/pages/user-info/user-info')
+				}else{
+					this.navTo("/pages/my/register")
+				}
 				
 			}
 			

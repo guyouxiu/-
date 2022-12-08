@@ -2,7 +2,7 @@
 	<view>
 		<view class="content">
 			<myList :myList="myList" class="myList"  @Clear="clear"></myList>
-			<button>退出登陆</button>
+			<button @click="loginOut">退出登陆</button>
 		</view>
 	</view>
 </template>
@@ -10,6 +10,7 @@
 <script>
 	import myList from "@/pages/my/components/list.vue"
 	import setList from '@/config/setting.js'
+	import loginApi from "@/api/login.js"
 	export default {
 		data() {
 			return {
@@ -35,7 +36,29 @@
 						console.log(err);
 					}
 				})
-			}
+			},
+			loginOut(){
+				uni.showModal({
+					content: "确定要退出吗",
+					success:async (res) => {
+						if (res.confirm) {
+							const out = await loginApi.getLoginOut()
+
+							if(out){
+								this.$utils.msg('退出成功')
+								uni.clearStorageSync()
+								
+							}
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					},
+					fail: (err) => {
+						console.log(err);
+					}
+				})
+				
+			},
 		}
 	}
 </script>

@@ -8,7 +8,7 @@
 				<input class="input" type="text" :placeholder="item.placeholder" v-model="form[item.prop]">
 			</view>
 		</view>
-		<button  @click="goModify" >保存</button>
+		<button  @click="passWordSave" >保存</button>
 	</view>
 </template>
 
@@ -67,7 +67,7 @@
 					//TODO handle the exception
 				}
 			},
-			goModify() {
+			passWordSave() {
 				uni.showLoading({
 					title: ''
 				})

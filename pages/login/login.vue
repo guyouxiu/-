@@ -116,9 +116,15 @@
 					} else {
 						this.$utils.msg('登陆成功')
 						this.$store.commit('loginUserinfo', res.data.data)
-						uni.navigateTo({
-							url: '/pages/bind-phone/bind-phone'
-						});
+						if(uni.getStorageSync("phone")){
+							uni.switchTab({
+								url:'/pages/my/my'
+							})
+						}else{
+							uni.navigateTo({
+								url: '/pages/bind-phone/bind-phone'
+							});
+						}
 						this.$store.commit('init')
 					}
 			

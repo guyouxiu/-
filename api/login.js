@@ -51,5 +51,27 @@ export default{
 			data,
 			method:'post'
 		})
-	}
+	},
+	//退出登录
+	getLoginOut(data){
+		return http.request({
+			url:'/logout',
+			data,
+			method:"post",
+		})
+	},
+	getCoupon(id){
+		return http.request({
+			url:'/coupon?',
+			method:"get",
+		})
+	},
+	//编辑资料
+	getEmitInfoMessage(data){
+		return http.request({
+			url:'/update_info',
+			method:"post",
+			data,
+		})
+	},
 }

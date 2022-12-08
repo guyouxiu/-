@@ -24,10 +24,6 @@
 				type: Array,
 				default: () => []
 			},
-			// formLists: {
-			// 	type: Array,
-			// 	default: () => []
-			// },
 			value: {
 				type: Object,
 				default: () => {}
