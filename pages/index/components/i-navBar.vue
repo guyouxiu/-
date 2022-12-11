@@ -1,6 +1,6 @@
 <template>
 	<view class="i-navBar">
-		<view class="navBarItem" v-for="(item,i) in navBarList" :key="i">
+		<view class="navBarItem" v-for="(item,i) in navBarList" :key="i" @click="navAuth(item)">
 			<image :src="item.src" mode=""></image>
 			<view class="title">{{item.name}}</view>
 		</view>
@@ -20,6 +20,41 @@
 			return {
 
 			};
+		},
+		methods: {
+			navAuth(item) {
+				if (item.url) {
+					this.navTo("/pages/webview/webview?url=" + item.url)
+				} else {
+					console.log(item);
+					switch (item.module) {
+						case "test":
+							this.navTo('/pages/test-list/test-list')
+							break;
+						case "book":
+							this.navTo('/pages/book-list/book-list')
+							break;
+						case "bbs":
+							this.navTo('/pages/bbs/bbs')
+							break;
+						case "flashsale":
+							this.navTo('/pages/flashsale/flashsale')
+							break;
+						case "live":
+							this.navTo('/pages/live/live')
+							break;
+						case "group":
+							this.navTo('/pages/group/group')
+							break;
+						case "column":
+							this.navTo('/pages/column/column')
+							break;
+						default:
+							this.navTo('/pages/list/list?module=' + item.module)
+							break;
+					}
+				}
+			},
 		}
 	}
 </script>

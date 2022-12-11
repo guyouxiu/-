@@ -29,5 +29,13 @@ export default {
 			url: `/flashsale?usable=${usable}`,
 			method: 'GET'
 		})
-	}
+	},
+	//我的优惠劵
+	getUserCoupon(data){
+		return http.request({
+			url:'/mobile/user_coupon',
+			method:"get",
+			data,
+		})
+	},
 }
